@@ -1,0 +1,18 @@
+[submodule "engines/sentinel-hash-identifier"]
+	path = engines/sentinel-hash-identifier
+	url = https://github.com/Atharv-Git-1216/sentinel-hash-identifier.git
+[submodule "engines/url-detector"]
+	path = engines/url-detector
+	url = https://github.com/Atharv-Git-1216/url-detector.git
+[submodule "engines/email-reader"]
+	path = engines/email-reader
+	url = https://github.com/Atharv-Git-1216/email-reader.git
+[submodule "engines/password-analyzer"]
+	path = engines/password-analyzer
+	url = https://github.com/Atharv-Git-1216/password-analyzer.git
+[submodule "engines/ip-checker"]
+	path = engines/ip-checker
+	url = https://github.com/Atharv-Git-1216/Sentinel-IP-Tracker.git
+[submodule "engines/file-scanner"]
+	path = engines/file-scanner
+	url = https://github.com/Atharv-Git-1216/Sentinel-Malware-Engine.git

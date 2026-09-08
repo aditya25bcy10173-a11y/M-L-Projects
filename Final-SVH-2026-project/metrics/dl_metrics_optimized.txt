@@ -1,0 +1,17 @@
+Optimized PyTorch MLP Model Evaluation
+=====================================
+
+Footfall Target:
+  R2 Score: 0.9455
+  MAE: 2855.22
+  RMSE: 7649.45
+
+Temperature Target:
+  R2 Score: 0.8383
+  MAE: 2.32
+  RMSE: 2.75
+
+Rainfall Target:
+  R2 Score: 0.1788
+  MAE: 2.49
+  RMSE: 7.27

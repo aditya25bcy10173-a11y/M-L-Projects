@@ -1,0 +1,101 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  DEVOTEE
+  STAFF
+  ADMIN
+}
+
+enum SlotStatus {
+  BOOKED
+  VALIDATED
+  EXPIRED
+  CANCELLED
+}
+
+enum IncidentType {
+  STAMPEDE_PRECURSOR
+  MEDICAL_FALL
+  SOS_MANUAL
+}
+
+enum IncidentSeverity {
+  INFO
+  WARNING
+  CRITICAL
+}
+
+model User {
+  id          String   @id @default(uuid())
+  phone       String   @unique
+  name        String?
+  role        Role     @default(DEVOTEE)
+  isPriority  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  tickets     Ticket[]
+}
+
+model Ticket {
+  id          String     @id @default(uuid())
+  userId      String
+  user        User       @relation(fields: [userId], references: [id])
+  siteId      String
+  slotTime    DateTime
+  qrToken     String     @unique
+  status      SlotStatus @default(BOOKED)
+  validatedAt DateTime?
+  createdAt   DateTime   @default(now())
+}
+
+model ZoneSnapshot {
+  id          String   @id @default(uuid())
+  siteId      String
+  zoneId      String
+  occupancy   Int
+  status      String
+  recordedAt  DateTime @default(now())
+
+  @@index([siteId, zoneId, recordedAt])
+}
+
+model Incident {
+  id                    String           @id @default(uuid())
+  siteId                String
+  zoneId                String?
+  type                  IncidentType
+  severity              IncidentSeverity @default(WARNING)
+  description           String
+  lat                   Float?
+  lng                   Float?
+  resolved              Boolean          @default(false)
+  
+  // Forecasted resource suggestions (from model)
+  suggestedDuration     Float?
+  suggestedMarshals     Int?
+  suggestedBarricades   String?          // None, Light, Heavy, Critical
+  suggestedDiversion    String?          // None, Minor, Major
+  
+  // Operator feedback (for retraining loop)
+  actualDuration        Float?
+  operatorOverrides     Boolean          @default(false)
+  createdAt             DateTime         @default(now())
+}
+
+model Forecast {
+  id             String   @id @default(uuid())
+  siteId         String
+  date           DateTime
+  predictedCount Int
+  lowerBound     Int
+  upperBound     Int
+  createdAt      DateTime @default(now())
+
+  @@unique([siteId, date])
+}

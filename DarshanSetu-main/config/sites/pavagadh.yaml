@@ -1,0 +1,18 @@
+site_id: pavagadh
+site_name: Kalika Mata Temple Pavagadh
+gates:
+  - id: gate_ropeway_exit
+    esp32_pins: [12, 13]
+    mqtt_topic: temple/pavagadh/gate_ropeway_exit/inflow
+zones:
+  - id: ropeway_queue_area
+    type: choke_point
+    threshold_warning: 0.70
+    threshold_critical: 0.85
+    capacity_source: "illustrative - Pavagadh Temple Trust"
+  - id: upper_plateau_sanctum
+    type: dense
+    threshold_warning: 0.75
+    threshold_critical: 0.90
+    capacity_source: "illustrative - Pavagadh Temple Trust"
+languages: [hi, gu, en]

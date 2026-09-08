@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+venv/
+__pycache__/
+*.pyc
+*.pt
+
+# Environment & Secrets
+.env
+
+# Build outputs
+dist/
+build/
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+
+# Media / Footage
+ml-engine/footage/*.mp4
+ml-engine/footage/*.avi

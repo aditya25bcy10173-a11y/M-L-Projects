@@ -1,0 +1,16 @@
+site_id: dwarka
+site_name: Dwarkadhish Temple
+gates:
+  - id: gate1
+    esp32_pins: [12, 13]
+    mqtt_topic: temple/dwarka/gate1/inflow
+zones:
+  - id: sanctum_approach
+    type: dense
+    threshold_warning: 0.7
+    threshold_critical: 0.9
+    capacity_source: "illustrative - Dwarkadhish Temple Trust"
+  - id: queue_lane_a
+    type: choke_point
+    capacity_source: "illustrative - Dwarkadhish Temple Trust"
+languages: [hi, gu, en]

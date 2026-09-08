@@ -1,0 +1,134 @@
+{
+  "modelName": "Darshan Trained Conformal Forecasting Model",
+  "totalTrainedRecords": 3572,
+  "testMAE": 5423.25,
+  "conformalMargin": 11170,
+  "predictions": [
+    {
+      "dayOffset": 0,
+      "originalDate": "2025-06-23",
+      "point": 82451,
+      "lower": 71281,
+      "upper": 93621,
+      "actual": 84179,
+      "errorPercent": "2.05%"
+    },
+    {
+      "dayOffset": 1,
+      "originalDate": "2025-06-24",
+      "point": 81506,
+      "lower": 70336,
+      "upper": 92676,
+      "actual": 79466,
+      "errorPercent": "2.57%"
+    },
+    {
+      "dayOffset": 2,
+      "originalDate": "2025-06-25",
+      "point": 75411,
+      "lower": 64241,
+      "upper": 86581,
+      "actual": 75001,
+      "errorPercent": "0.55%"
+    },
+    {
+      "dayOffset": 3,
+      "originalDate": "2025-06-26",
+      "point": 72857,
+      "lower": 61687,
+      "upper": 84027,
+      "actual": 64879,
+      "errorPercent": "12.30%"
+    },
+    {
+      "dayOffset": 4,
+      "originalDate": "2025-06-27",
+      "point": 72135,
+      "lower": 60965,
+      "upper": 83305,
+      "actual": 68229,
+      "errorPercent": "5.73%"
+    },
+    {
+      "dayOffset": 5,
+      "originalDate": "2025-06-28",
+      "point": 92299,
+      "lower": 81129,
+      "upper": 103469,
+      "actual": 90051,
+      "errorPercent": "2.50%"
+    },
+    {
+      "dayOffset": 6,
+      "originalDate": "2025-06-29",
+      "point": 91582,
+      "lower": 80412,
+      "upper": 102752,
+      "actual": 88497,
+      "errorPercent": "3.49%"
+    },
+    {
+      "dayOffset": 7,
+      "originalDate": "2025-06-30",
+      "point": 77282,
+      "lower": 66112,
+      "upper": 88452,
+      "actual": 78730,
+      "errorPercent": "1.84%"
+    },
+    {
+      "dayOffset": 8,
+      "originalDate": "2025-07-01",
+      "point": 73537,
+      "lower": 62367,
+      "upper": 84707,
+      "actual": 76126,
+      "errorPercent": "3.40%"
+    },
+    {
+      "dayOffset": 9,
+      "originalDate": "2025-07-02",
+      "point": 70757,
+      "lower": 59587,
+      "upper": 81927,
+      "actual": 74510,
+      "errorPercent": "5.04%"
+    },
+    {
+      "dayOffset": 10,
+      "originalDate": "2025-07-03",
+      "point": 69947,
+      "lower": 58777,
+      "upper": 81117,
+      "actual": 64015,
+      "errorPercent": "9.27%"
+    },
+    {
+      "dayOffset": 11,
+      "originalDate": "2025-07-04",
+      "point": 72336,
+      "lower": 61166,
+      "upper": 83506,
+      "actual": 70011,
+      "errorPercent": "3.32%"
+    },
+    {
+      "dayOffset": 12,
+      "originalDate": "2025-07-05",
+      "point": 87382,
+      "lower": 76212,
+      "upper": 98552,
+      "actual": 87536,
+      "errorPercent": "0.18%"
+    },
+    {
+      "dayOffset": 13,
+      "originalDate": "2025-07-06",
+      "point": 89949,
+      "lower": 78779,
+      "upper": 101119,
+      "actual": 88938,
+      "errorPercent": "1.14%"
+    }
+  ]
+}

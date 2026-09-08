@@ -1,0 +1,8 @@
+streamlit
+pandas
+numpy
+plotly
+catboost
+scikit-learn
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch

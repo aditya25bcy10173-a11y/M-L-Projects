@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 220 25% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 25% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 25% 15%;
+
+    --primary: 188 85% 42%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 190 90% 50%;
+
+    --secondary: 210 30% 96%;
+    --secondary-foreground: 220 25% 25%;
+
+    --muted: 210 30% 96%;
+    --muted-foreground: 215 15% 50%;
+
+    --accent: 188 80% 95%;
+    --accent-foreground: 188 90% 30%;
+
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 215 25% 92%;
+    --input: 215 25% 92%;
+    --ring: 188 85% 42%;
+
+    --radius: 0.875rem;
+
+    --hero-gradient: linear-gradient(135deg, hsl(188, 85%, 42%), hsl(205, 80%, 45%));
+    --card-glow: 0 4px 20px -8px hsla(220, 30%, 40%, 0.08);
+    --card-glow-hover: 0 12px 32px -8px hsla(188, 85%, 42%, 0.15);
+    --card-border-glow: hsl(215, 25%, 92%);
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 220 25% 25%;
+    --sidebar-primary: 188 85% 42%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 188 80% 95%;
+    --sidebar-accent-foreground: 188 90% 30%;
+    --sidebar-border: 215 25% 92%;
+    --sidebar-ring: 188 85% 42%;
+  }
+
+  .dark {
+    --background: 0 0% 0%;
+    --foreground: 210 40% 98%;
+
+    --card: 0 0% 3%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 0 0% 3%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 180 100% 50%;
+    --primary-foreground: 0 0% 0%;
+    --primary-glow: 185 100% 60%;
+
+    --secondary: 0 0% 6%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 0 0% 6%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 180 100% 8%;
+    --accent-foreground: 180 100% 80%;
+
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 10%;
+    --input: 0 0% 10%;
+    --ring: 180 100% 50%;
+
+    --hero-gradient: linear-gradient(135deg, hsl(180, 100%, 50%), hsl(200, 100%, 55%));
+    --card-glow: 0 0px 0px transparent;
+    --card-glow-hover: 0 0px 25px 0px hsla(180, 100%, 50%, 0.25);
+    --card-border-glow: hsl(0, 0%, 10%);
+
+    --sidebar-background: 0 0% 2%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 180 100% 50%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 180 100% 8%;
+    --sidebar-accent-foreground: 180 100% 80%;
+    --sidebar-border: 0 0% 10%;
+    --sidebar-ring: 180 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: var(--hero-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-hero-gradient {
+    background: var(--hero-gradient);
+  }
+
+  .card-glow {
+    box-shadow: var(--card-glow);
+    border: 1px solid var(--card-border-glow);
+  }
+
+  .card-glow-hover:hover {
+    box-shadow: var(--card-glow-hover);
+    border-color: hsl(var(--primary) / 0.4);
+  }
+
+  .glass {
+    backdrop-filter: blur(16px);
+    background: hsla(0, 0%, 100%, 0.85);
+  }
+
+  .dark .glass {
+    background: hsla(0, 0%, 0%, 0.85);
+  }
+
+  /* Custom dark scrollbars */
+  .dark::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  .dark::-webkit-scrollbar-track {
+    background: #000000;
+  }
+  .dark::-webkit-scrollbar-thumb {
+    background: #111111;
+    border-radius: 5px;
+    border: 2px solid #000000;
+  }
+  .dark::-webkit-scrollbar-thumb:hover {
+    background: #222222;
+  }
+  .dark {
+    scrollbar-width: thin;
+    scrollbar-color: #111111 #000000;
+  }
+
+  @keyframes wave-hand {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-3deg) scale(1.02); }
+    75% { transform: rotate(3deg) scale(1.02); }
+  }
+
+  .animate-waving-hand {
+    animation: wave-hand 2s ease-in-out infinite;
+    transform-origin: bottom center;
+  }
+}

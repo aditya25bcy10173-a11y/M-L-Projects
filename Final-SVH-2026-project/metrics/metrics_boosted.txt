@@ -1,0 +1,19 @@
+Best Model: LightGBM
+======================================
+Test Accuracy: 0.8891
+
+LightGBM Accuracy: 0.8891
+XGBoost Accuracy: 0.8859
+CatBoost Accuracy: 0.8848
+
+Classification Report:
+              precision    recall  f1-score   support
+
+        46_i       0.62      0.61      0.61       756
+       46_ii       0.67      0.56      0.61      1332
+      46_iii       0.11      0.03      0.04       116
+        49_i       0.95      1.00      0.97      6997
+
+    accuracy                           0.89      9201
+   macro avg       0.59      0.55      0.56      9201
+weighted avg       0.87      0.89      0.88      9201

@@ -1,0 +1,18 @@
+site_id: ambaji
+site_name: Ambaji Temple
+gates:
+  - id: gate_gabbar_path
+    esp32_pins: [12, 13]
+    mqtt_topic: temple/ambaji/gate_gabbar_path/inflow
+zones:
+  - id: gabbar_hill_stairs
+    type: choke_point
+    threshold_warning: 0.70
+    threshold_critical: 0.85
+    capacity_source: "illustrative - Ambaji Temple Board"
+  - id: main_sanctum
+    type: dense
+    threshold_warning: 0.80
+    threshold_critical: 0.95
+    capacity_source: "illustrative - Ambaji Temple Board"
+languages: [hi, gu, en]

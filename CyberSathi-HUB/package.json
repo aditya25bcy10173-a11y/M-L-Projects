@@ -1,0 +1,41 @@
+{
+  "name": "sentinel-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev:ui": "next dev",
+    "dev:hash": "cd engines/hash-identifier && python app.py",
+    "dev:url": "cd engines/url-detector && python app.py",
+    "dev:ip": "cd engines/ip-checker && python app.py",
+    "dev:port": "cd engines/port-scanner && python app.py",
+    "dev:file": "cd engines/file-scanner && python app.py",
+    "dev:ssl": "cd engines/ssl-checker && python app.py",
+    "dev:email": "cd engines/email-reader && python app.py",
+    "dev:pass": "cd engines/password-analyzer && python app.py",
+    "dev": "set \"PATH=%PATH%;C:\\Windows\\System32\" && concurrently -c \"cyan,red,green,yellow,blue,magenta,white,gray,cyan.bold\" -n \"UI,HASH,URL,IP,PORT,FILE,SSL,MAIL,PASS\" \"npm run dev:ui\" \"npm run dev:hash\" \"npm run dev:url\" \"npm run dev:ip\" \"npm run dev:port\" \"npm run dev:file\" \"npm run dev:ssl\" \"npm run dev:email\" \"npm run dev:pass\"",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.10.3",
+    "@supabase/supabase-js": "^2.106.1",
+    "framer-motion": "^12.40.0",
+    "lucide-react": "^1.16.0",
+    "next": "16.2.6",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "rss-parser": "^3.13.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "concurrently": "^9.2.1",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.6",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

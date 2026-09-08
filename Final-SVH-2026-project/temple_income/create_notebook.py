@@ -1,0 +1,267 @@
+import json
+import os
+
+def create_notebook():
+    notebook = {
+        "cells": [
+            {
+                "cell_type": "markdown",
+                "metadata": {},
+                "source": [
+                    "# Tamil Nadu Temples Category Prediction Pipeline\n",
+                    "This notebook demonstrates how to load, clean, pre-process, and train a boosted machine learning model (LightGBM) to predict the **12A Income Category** of temples in Tamil Nadu based on categorical features and temple names."
+                ]
+            },
+            {
+                "cell_type": "code",
+                "execution_count": None,
+                "metadata": {},
+                "outputs": [],
+                "source": [
+                    "import os\n",
+                    "import pandas as pd\n",
+                    "import numpy as np\n",
+                    "import matplotlib.pyplot as plt\n",
+                    "import seaborn as sns\n",
+                    "from sklearn.model_selection import train_test_split\n",
+                    "from sklearn.compose import ColumnTransformer\n",
+                    "from sklearn.preprocessing import OneHotEncoder, LabelEncoder\n",
+                    "from sklearn.feature_extraction.text import TfidfVectorizer\n",
+                    "from sklearn.metrics import classification_report, accuracy_score, confusion_matrix\n",
+                    "import lightgbm as lgb\n",
+                    "import joblib"
+                ]
+            },
+            {
+                "cell_type": "markdown",
+                "metadata": {},
+                "source": [
+                    "## 1. Load the Dataset"
+                ]
+            },
+            {
+                "cell_type": "code",
+                "execution_count": None,
+                "metadata": {},
+                "outputs": [],
+                "source": [
+                    "data_path = r\"C:\\Users\\adity\\OneDrive\\Desktop\\tn_temples_consolidated.xlsx\"\n",
+                    "print(f\"Loading dataset from {data_path}...\")\n",
+                    "df = pd.read_excel(data_path)\n",
+                    "print(f\"Shape: {df.shape}\")\n",
+                    "df.head()"
+                ]
+            },
+            {
+                "cell_type": "markdown",
+                "metadata": {},
+                "source": [
+                    "## 2. Preprocessing & Feature Engineering\n",
+                    "- Handle missing values.\n",
+                    "- Extract `pincode_prefix` (first 3 digits of pincode) as a regional geographical feature.\n",
+                    "- Encode target labels."
+                ]
+            },
+            {
+                "cell_type": "code",
+                "execution_count": None,
+                "metadata": {},
+                "outputs": [],
+                "source": [
+                    "# Drop rows with missing target variable\n",
+                    "df = df.dropna(subset=['temple_12a_category'])\n",
+                    "\n",
+                    "# Handle missing values in other features\n",
+                    "df['district'] = df['district'].fillna('Unknown')\n",
+                    "df['temple_type'] = df['temple_type'].fillna('Unknown')\n",
+                    "df['temple_listing_type'] = df['temple_listing_type'].fillna('Unknown')\n",
+                    "df['temple_name'] = df['temple_name'].fillna('')\n",
+                    "\n",
+                    "# Feature Engineering: Clean pincode and extract first 3 digits\n",
+                    "df['pincode_str'] = df['pincode'].fillna('000000').astype(str).str.replace(r'\\.0$', '', regex=True)\n",
+                    "df['pincode_prefix'] = df['pincode_str'].str[:3]\n",
+                    "df['pincode_prefix'] = df['pincode_prefix'].apply(lambda x: x if x.isdigit() and len(x) == 3 else '000')\n",
+                    "\n",
+                    "# Target definition & encoding\n",
+                    "target_col = 'temple_12a_category'\n",
+                    "X = df[['temple_type', 'temple_listing_type', 'district', 'pincode_prefix', 'temple_name']]\n",
+                    "y = df[target_col]\n",
+                    "\n",
+                    "le = LabelEncoder()\n",
+                    "y_encoded = le.fit_transform(y)\n",
+                    "print(\"Classes:\", le.classes_)"
+                ]
+            },
+            {
+                "cell_type": "markdown",
+                "metadata": {},
+                "source": [
+                    "## 3. Train/Test Split"
+                ]
+            },
+            {
+                "cell_type": "code",
+                "execution_count": None,
+                "metadata": {},
+                "outputs": [],
+                "source": [
+                    "X_train, X_test, y_train, y_test = train_test_split(\n",
+                    "    X, y_encoded, test_size=0.2, random_state=42, stratify=y_encoded\n",
+                    ")\n",
+                    "print(f\"Train size: {X_train.shape[0]}, Test size: {X_test.shape[0]}\")"
+                ]
+            },
+            {
+                "cell_type": "markdown",
+                "metadata": {},
+                "source": [
+                    "## 4. Pipeline Setup & LightGBM Training"
+                ]
+            },
+            {
+                "cell_type": "code",
+                "execution_count": None,
+                "metadata": {},
+                "outputs": [],
+                "source": [
+                    "preprocessor = ColumnTransformer(\n",
+                    "    transformers=[\n",
+                    "        ('cat', OneHotEncoder(handle_unknown='ignore'), ['temple_type', 'temple_listing_type', 'district', 'pincode_prefix']),\n",
+                    "        ('text', TfidfVectorizer(max_features=500, stop_words='english', ngram_range=(1, 2)), 'temple_name')\n",
+                    "    ],\n",
+                    "    remainder='drop'\n",
+                    ")\n",
+                    "\n",
+                    "print(\"Preprocessing and transforming data...\")\n",
+                    "X_train_transformed = preprocessor.fit_transform(X_train)\n",
+                    "X_test_transformed = preprocessor.transform(X_test)\n",
+                    "\n",
+                    "print(\"Training LightGBM Classifier...\")\n",
+                    "model = lgb.LGBMClassifier(\n",
+                    "    n_estimators=200,\n",
+                    "    learning_rate=0.1,\n",
+                    "    random_state=42,\n",
+                    "    n_jobs=-1,\n",
+                    "    verbose=-1\n",
+                    ")\n",
+                    "model.fit(X_train_transformed, y_train)\n",
+                    "print(\"Training finished!\")"
+                ]
+            },
+            {
+                "cell_type": "markdown",
+                "metadata": {},
+                "source": [
+                    "## 5. Model Evaluation"
+                ]
+            },
+            {
+                "cell_type": "code",
+                "execution_count": None,
+                "metadata": {},
+                "outputs": [],
+                "source": [
+                    "y_pred = model.predict(X_test_transformed)\n",
+                    "accuracy = accuracy_score(y_test, y_pred)\n",
+                    "print(f\"Test Accuracy: {accuracy:.4f}\\n\")\n",
+                    "print(\"Classification Report:\")\n",
+                    "print(classification_report(y_test, y_pred, target_names=le.classes_))"
+                ]
+            },
+            {
+                "cell_type": "markdown",
+                "metadata": {},
+                "source": [
+                    "## 6. Confusion Matrix Heatmap"
+                ]
+            },
+            {
+                "cell_type": "code",
+                "execution_count": None,
+                "metadata": {},
+                "outputs": [],
+                "source": [
+                    "cm = confusion_matrix(y_test, y_pred)\n",
+                    "plt.figure(figsize=(8, 6))\n",
+                    "sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=le.classes_, yticklabels=le.classes_)\n",
+                    "plt.title('Confusion Matrix')\n",
+                    "plt.ylabel('Actual Category')\n",
+                    "plt.xlabel('Predicted Category')\n",
+                    "plt.tight_layout()\n",
+                    "plt.show()"
+                ]
+            },
+            {
+                "cell_type": "markdown",
+                "metadata": {},
+                "source": [
+                    "## 7. Feature Importance Plot (Top 20)"
+                ]
+            },
+            {
+                "cell_type": "code",
+                "execution_count": None,
+                "metadata": {},
+                "outputs": [],
+                "source": [
+                    "cat_names = preprocessor.named_transformers_['cat'].get_feature_names_out(['temple_type', 'temple_listing_type', 'district', 'pincode_prefix'])\n",
+                    "text_names = preprocessor.named_transformers_['text'].get_feature_names_out()\n",
+                    "feature_names = np.concatenate([cat_names, text_names])\n",
+                    "\n",
+                    "importances = model.feature_importances_\n",
+                    "indices = np.argsort(importances)[::-1]\n",
+                    "\n",
+                    "plt.figure(figsize=(10, 8))\n",
+                    "sns.barplot(x=importances[indices[:20]], y=feature_names[indices[:20]], hue=feature_names[indices[:20]], palette='viridis', legend=False)\n",
+                    "plt.title('Top 20 Most Important Features')\n",
+                    "plt.xlabel('Relative Importance')\n",
+                    "plt.tight_layout()\n",
+                    "plt.show()"
+                ]
+            },
+            {
+                "cell_type": "markdown",
+                "metadata": {},
+                "source": [
+                    "## 8. Save the Pipeline"
+                ]
+            },
+            {
+                "cell_type": "code",
+                "execution_count": None,
+                "metadata": {},
+                "outputs": [],
+                "source": [
+                    "save_data = {\n",
+                    "    'preprocessor': preprocessor,\n",
+                    "    'model': model,\n",
+                    "    'label_encoder': le\n",
+                    "}\n",
+                    "save_path = 'temple_boosted_model.joblib'\n",
+                    "joblib.dump(save_data, save_path)\n",
+                    "print(f\"Saved pipeline to {save_path}\")"
+                ]
+            }
+        ],
+        "metadata": {
+            "kernelspec": {
+                "display_name": "Python 3",
+                "language": "python",
+                "name": "python3"
+            },
+            "language_info": {
+                "name": "python"
+            }
+        },
+        "nbformat": 4,
+        "nbformat_minor": 2
+    }
+    
+    desktop_path = r"C:\Users\adity\OneDrive\Desktop\temple_training_pipeline.ipynb"
+    print(f"Writing notebook to {desktop_path}...")
+    with open(desktop_path, "w", encoding="utf-8") as f:
+        json.dump(notebook, f, indent=2)
+    print("Notebook written successfully!")
+
+if __name__ == "__main__":
+    create_notebook()

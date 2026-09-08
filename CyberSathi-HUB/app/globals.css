@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+:root {
+  /* Premium Deep Cyber Palette */
+  --background: #030712; /* Slate 950 */
+  --foreground: #f8fafc; /* Slate 50 */
+  
+  /* Cyber Accent Highlights */
+  --color-cyber-cyan: #22d3ee;
+  --color-cyber-purple: #a855f7;
+  --color-border-dark: #1e293b;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  
+  /* Bind our premium custom colors so Tailwind can read them inline */
+  --color-cyan-glow: var(--color-cyber-cyan);
+  --color-purple-glow: var(--color-cyber-purple);
+  --color-panel-border: var(--color-border-dark);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  /* Premium modern tech font stack (Inter / SF Pro / Geist fallback) */
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================================
+   PREMIUM HIGHLIGHTS & TYPOGRAPHY
+   ========================================================================== */
+
+/* High-contrast crisp headings with gradient text styling options */
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.025em;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* Subtly glowing headers for your panels */
+.premium-heading-glow {
+  background: linear-gradient(to right, #ffffff, #94a3b8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Cyber Accent Tabs & Buttons */
+.cyber-tab-active {
+  position: relative;
+  background: linear-gradient(to right, rgba(34, 211, 238, 0.1), rgba(34, 211, 238, 0.02));
+  border: 1px solid rgba(34, 211, 238, 0.25) !important;
+  color: var(--color-cyber-cyan) !important;
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Sleek subtle light bar on the left edge of active tabs */
+.cyber-tab-active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 25%;
+  height: 50%;
+  w: 2px;
+  background: var(--color-cyber-cyan);
+  box-shadow: 0 0 8px var(--color-cyber-cyan);
+  border-radius: 0 4px 4px 0;
+}
+
+/* Premium micro-animations for interactive list elements */
+.cyber-panel-card {
+  background: rgba(15, 23, 42, 0.3);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(30, 41, 59, 0.7);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cyber-panel-card:hover {
+  border-color: rgba(34, 211, 238, 0.2);
+  box-shadow: 0 0 25px rgba(34, 211, 238, 0.03);
+}

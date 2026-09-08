@@ -1,0 +1,19 @@
+site_id: somnath
+site_name: Somnath Jyotirlinga Temple
+gates:
+  - id: gate_main_east
+    esp32_pins: [12, 13]
+    mqtt_topic: temple/somnath/gate_main_east/inflow
+  - id: gate_sea_facing
+    esp32_pins: [14, 15]
+    mqtt_topic: temple/somnath/gate_sea_facing/inflow
+zones:
+  - id: temple_courtyard
+    type: dense
+    threshold_warning: 0.75
+    threshold_critical: 0.90
+    capacity_source: "illustrative - Somnath Trust"
+  - id: darshan_hall_queue
+    type: choke_point
+    capacity_source: "illustrative - Somnath Trust"
+languages: [hi, gu, en]
